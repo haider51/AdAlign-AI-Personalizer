@@ -9,13 +9,13 @@ import time
 # --- CONFIGURATION ---
 st.set_page_config(page_title="Troopod AI: Multi-Agent Personalizer", layout="wide")
 
+# Initialize Gemini API securely from Streamlit Secrets
+genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
+
 # Initialize Gemini API
 with st.sidebar:
     st.title("🎯 Troopod AI PM")
     st.markdown("---")
-    api_key = st.text_input("Enter Gemini API Key", type="password")
-    if api_key:
-        genai.configure(api_key=api_key)
     
     st.info("""
     **Architecture:** Multi-Agent Reflection  
@@ -129,9 +129,7 @@ with col2:
     st.subheader("2. Optimization Output")
     
     if st.button("Generate Personalized Experience", type="primary"):
-        if not api_key:
-            st.error("Please enter an API Key in the sidebar.")
-        elif not uploaded_file or not target_url:
+        if not uploaded_file or not target_url:
             st.error("Please provide both an ad image and a URL.")
         else:
             # Create the log expander first
@@ -172,9 +170,23 @@ with col2:
                             with tab2:
                                 st.metric("CRO Lift Score", f"{data.get('audit_score')}/100")
                                 st.warning(f"**AI Gap Analysis:** {data.get('gap_analysis')}")
-                                st.write("**Personalized FAQ Suggestion:**")
-                                st.json(data.get('faq_suggestion', {}))
                                 
+                                st.write("**Future Optimization Roadmap:**")
+                                for rec in data.get('recommendations', []):
+                                    st.write(f"- [ ] {rec}")
+                                
+                                st.write("**Personalized FAQ Suggestion:**")
+                                faq_data = data.get('faq_suggestion', 'No FAQ generated.')
+                                
+                                # Safely render the FAQ whether the AI returns a dictionary or a string
+                                if isinstance(faq_data, dict):
+                                    # If the AI perfectly formatted it as Q&A
+                                    for k, v in faq_data.items():
+                                        st.info(f"**{k.upper()}:** {v}")
+                                else:
+                                    # If the AI just returned a normal text string
+                                    st.info(faq_data)
+                                    
                         except Exception as e:
                             st.error(f"Logic Error: {e}")
-                            st.code(raw_result)
+                            st.code(raw_result)  
