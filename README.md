@@ -1,6 +1,6 @@
 # 🎯 AdAlign AI: Multi-Agent Personalization Engine
 
-> **Live Demo:** (https://adalign-ai-personalizer-hxxhhrhmuo8r22nshkt5app.streamlit.app/)               
+> **Live Demo:** (https://adalign-ai-personalizer-zspcjpbuvuniyazz8cqdnr.streamlit.app/)               
 > **Strategic Product Brief:** (https://docs.google.com/document/d/159MERXft4ToTS3Ij8WBjosh-o2LXK6Hnfywhpxp5kK0/edit?usp=sharing)
 
 AdAlign AI is a high-fidelity personalization prototype developed for the **Troopod AI PM Assignment**. It solves the "Ad-to-Page" message mismatch problem by using a Multi-Agent Reflection architecture to intelligently rewrite landing page elements in real-time based on visual ad creative context.
